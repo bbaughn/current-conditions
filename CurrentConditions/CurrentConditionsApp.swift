@@ -16,6 +16,9 @@ struct CurrentConditionsApp: App {
         WindowGroup {
             WeatherView()
             .sheet(isPresented: $showLocationModal, onDismiss: onDismiss, content: { LocationView() })
+            .onReceive(WeatherManager.shared.hasLocation) { hasLocation in
+              showLocationModal = !hasLocation
+            }
         }
     }
   
