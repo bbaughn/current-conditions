@@ -25,7 +25,21 @@ struct WeatherView: View {
             .font(Font.system(size: 56.0))
           Text(viewModel.locationName)
             .font(.system(size: 24.0))
+          AsyncImage(url: viewModel.iconURL) { phase in
+              switch phase {
+                case .failure: Text("No Image")
+                case .success(let image): image .resizable()
+                default: ProgressView()
+              }
+            }
+            .frame(width: 96, height: 96)
           Text(viewModel.description)
+          HStack {
+            Text("High:")
+            Text(viewModel.temperatureHigh)
+            Text(" Low:")
+            Text(viewModel.temperatureLow)
+          }
         }
         else {
           Text("Weather App")

@@ -13,7 +13,10 @@ class WeatherViewModel: ObservableObject {
   @Published var showWeather: Bool = false
   @Published var locationName: String = ""
   @Published var temperature: String = ""
+  @Published var temperatureHigh: String = ""
+  @Published var temperatureLow: String = ""
   @Published var description: String = ""
+  @Published var iconURL: URL? = nil
   
   var useCelsius: Published<Bool>.Publisher { $_useCelsius }
   @Published var _useCelsius: Bool = false
@@ -39,6 +42,9 @@ class WeatherViewModel: ObservableObject {
       guard let currentConditions = currentConditions else { return }
       let units : UnitTemperature = self._useCelsius ? .celsius : .fahrenheit
       self.temperature = self.convertTemperature(temp: currentConditions.main.temp, from: .kelvin, to: units)
+      self.temperatureHigh = self.convertTemperature(temp: currentConditions.main.temp_max, from: .kelvin, to: units)
+      self.temperatureLow = self.convertTemperature(temp: currentConditions.main.temp_min, from: .kelvin, to: units)
+      self.iconURL = URL(string: "https://openweathermap.org/img/wn/" + currentConditions.weather[0].icon + "@2x.png")
       self.description = currentConditions.weather[0].main
     }.store(in: &self.cancellables)
   }
