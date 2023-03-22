@@ -7,6 +7,34 @@
 
 import Foundation
 
+// Could be in a models file
+struct CurrentConditions: Codable {
+  let weather: [Weather]
+  let visibility: Int
+  let name: String
+  let main: Main
+  let sys: Sys
+}
+
+struct Main: Codable {
+  let temp: Double
+  let feels_like: Double
+  let temp_min: Double
+  let temp_max: Double
+}
+
+struct Sys: Codable {
+  let sunrise: Int
+  let sunset: Int
+}
+
+struct Weather: Codable {
+  let id: Int
+  let main: String
+  let description: String
+  let icon: String
+}
+
 class NetworkService {
   static let shared = NetworkService()
   
@@ -14,6 +42,9 @@ class NetworkService {
   let URL_BASE = "https://api.openweathermap.org/data/2.5/weather?"
   
   let session = URLSession(configuration: .default)
+  
+  internal var currentConditions: Published<CurrentConditions?>.Publisher { $_currentConditions }
+  @Published var _currentConditions: CurrentConditions? = nil
   
   internal var apiFailure: Published<Bool>.Publisher { $_apiFailure }
   @Published var _apiFailure: Bool = false
@@ -50,7 +81,8 @@ class NetworkService {
         
         do {
           if response.statusCode == 200 {
-            print(String(data: data, encoding: .utf8))
+            self._currentConditions = try JSONDecoder().decode(CurrentConditions.self, from: data)
+            print(self._currentConditions?.name)
           } else {
             print("Response wasn't 200. It was: " + "\n\(response.statusCode)")
             self._apiFailure = true
