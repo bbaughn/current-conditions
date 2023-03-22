@@ -10,8 +10,13 @@ import Combine
 
 class WeatherViewModel: ObservableObject {
   
-  @Published var locationName: String = ""
   @Published var showWeather: Bool = false
+  @Published var locationName: String = ""
+  @Published var temperature: String = ""
+  @Published var description: String = ""
+  
+  var useCelsius: Published<Bool>.Publisher { $_useCelsius }
+  @Published var _useCelsius: Bool = false
   
   private var cancellables = Set<AnyCancellable>()
   
@@ -27,5 +32,24 @@ class WeatherViewModel: ObservableObject {
         self.locationName = currentConditions.name
         
       }.store(in: &self.cancellables)
+    
+    Publishers.CombineLatest(NetworkService.shared.currentConditions, useCelsius)
+    .receive(on: RunLoop.main)
+    .sink { currentConditions, temperatureUnits in
+      guard let currentConditions = currentConditions else { return }
+      let units : UnitTemperature = self._useCelsius ? .celsius : .fahrenheit
+      self.temperature = self.convertTemperature(temp: currentConditions.main.temp, from: .kelvin, to: units)
+      self.description = currentConditions.weather[0].main
+    }.store(in: &self.cancellables)
   }
+  
+  // Could be in a utilities file
+  func convertTemperature(temp: Double, from inputTempType: UnitTemperature, to outputTempType: UnitTemperature) -> String {
+      let measurementFormatter = MeasurementFormatter()
+      measurementFormatter.numberFormatter.maximumFractionDigits = 0
+      measurementFormatter.unitOptions = .providedUnit
+      let input = Measurement(value: temp, unit: inputTempType)
+      let output = input.converted(to: outputTempType)
+      return measurementFormatter.string(from: output)
+    }
 }
