@@ -14,6 +14,7 @@
 		A37AB5BC29CBBB4A00E6D0C3 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37AB5BB29CBBB4A00E6D0C3 /* LocationView.swift */; };
 		A37AB5BE29CBBCD100E6D0C3 /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37AB5BD29CBBCD100E6D0C3 /* WeatherManager.swift */; };
 		A37AB5C029CBBEAA00E6D0C3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37AB5BF29CBBEAA00E6D0C3 /* NetworkService.swift */; };
+		A37AB5C229CBC18100E6D0C3 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37AB5C129CBC18100E6D0C3 /* WeatherViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		A37AB5BB29CBBB4A00E6D0C3 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		A37AB5BD29CBBCD100E6D0C3 /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		A37AB5BF29CBBEAA00E6D0C3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		A37AB5C129CBC18100E6D0C3 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,11 +61,12 @@
 			children = (
 				A37AB5AD29CBB90900E6D0C3 /* CurrentConditionsApp.swift */,
 				A37AB5AF29CBB90900E6D0C3 /* WeatherView.swift */,
-				A37AB5B129CBB90C00E6D0C3 /* Assets.xcassets */,
-				A37AB5B329CBB90C00E6D0C3 /* Preview Content */,
+				A37AB5C129CBC18100E6D0C3 /* WeatherViewModel.swift */,
 				A37AB5BB29CBBB4A00E6D0C3 /* LocationView.swift */,
 				A37AB5BD29CBBCD100E6D0C3 /* WeatherManager.swift */,
 				A37AB5BF29CBBEAA00E6D0C3 /* NetworkService.swift */,
+				A37AB5B129CBB90C00E6D0C3 /* Assets.xcassets */,
+				A37AB5B329CBB90C00E6D0C3 /* Preview Content */,
 			);
 			path = CurrentConditions;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A37AB5C029CBBEAA00E6D0C3 /* NetworkService.swift in Sources */,
+				A37AB5C229CBC18100E6D0C3 /* WeatherViewModel.swift in Sources */,
 				A37AB5B029CBB90900E6D0C3 /* WeatherView.swift in Sources */,
 				A37AB5BC29CBBB4A00E6D0C3 /* LocationView.swift in Sources */,
 				A37AB5BE29CBBCD100E6D0C3 /* WeatherManager.swift in Sources */,
