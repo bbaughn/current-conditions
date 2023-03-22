@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct CurrentConditionsApp: App {
+  
+    @State private var showLocationModal: Bool = true
+  
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WeatherView()
+            .sheet(isPresented: $showLocationModal, onDismiss: onDismiss, content: { LocationView() })
         }
     }
+  
+    func onDismiss() {}
 }
