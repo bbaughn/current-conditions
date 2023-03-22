@@ -12,6 +12,7 @@
 		A37AB5B229CBB90C00E6D0C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A37AB5B129CBB90C00E6D0C3 /* Assets.xcassets */; };
 		A37AB5B529CBB90C00E6D0C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A37AB5B429CBB90C00E6D0C3 /* Preview Assets.xcassets */; };
 		A37AB5BC29CBBB4A00E6D0C3 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37AB5BB29CBBB4A00E6D0C3 /* LocationView.swift */; };
+		A37AB5BE29CBBCD100E6D0C3 /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37AB5BD29CBBCD100E6D0C3 /* WeatherManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		A37AB5B129CBB90C00E6D0C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A37AB5B429CBB90C00E6D0C3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A37AB5BB29CBBB4A00E6D0C3 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
+		A37AB5BD29CBBCD100E6D0C3 /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 				A37AB5B129CBB90C00E6D0C3 /* Assets.xcassets */,
 				A37AB5B329CBB90C00E6D0C3 /* Preview Content */,
 				A37AB5BB29CBBB4A00E6D0C3 /* LocationView.swift */,
+				A37AB5BD29CBBCD100E6D0C3 /* WeatherManager.swift */,
 			);
 			path = CurrentConditions;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			files = (
 				A37AB5B029CBB90900E6D0C3 /* WeatherView.swift in Sources */,
 				A37AB5BC29CBBB4A00E6D0C3 /* LocationView.swift in Sources */,
+				A37AB5BE29CBBCD100E6D0C3 /* WeatherManager.swift in Sources */,
 				A37AB5AE29CBB90900E6D0C3 /* CurrentConditionsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
