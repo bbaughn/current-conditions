@@ -46,6 +46,11 @@ struct WeatherView: View {
             .font(Font.system(size: 32.0))
         }
         Spacer()
+        Button(viewModel.showWeather ? "Reset Location" : "Set Location", action: { WeatherManager.shared.reset() })
+        .frame(width: 280, height: 50)
+        .foregroundColor(.blue)
+        .background(content: { Color(.white) })
+        .cornerRadius(8.0)
       }
       .padding()
     }

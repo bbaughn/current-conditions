@@ -52,4 +52,9 @@ class WeatherManager {
     _locationString = inputString
   }
   
+  func reset() {
+    _locationGeo = nil
+    _locationString = nil
+    NetworkService.shared.resetCurrentConditions()
+  }
 }

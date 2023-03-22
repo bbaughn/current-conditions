@@ -95,4 +95,8 @@ class NetworkService {
     }
     task.resume()
   }
+  
+  func resetCurrentConditions() {
+    _currentConditions = nil
+  }
 }
