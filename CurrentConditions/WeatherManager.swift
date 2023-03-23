@@ -85,7 +85,12 @@ class WeatherManager: NSObject, CLLocationManagerDelegate {
   func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
     print("Location manager did change authorization to \(locationManager.authorizationStatus)")
     if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
+      print("Going to request location")
       locationManager.requestLocation()
+    }
+    else {
+      print("Setting location failure to true")
+      _locationFailure = true
     }
   }
   
@@ -115,6 +120,12 @@ class WeatherManager: NSObject, CLLocationManagerDelegate {
     _locationString = nil
     _locationGeo = nil
     NetworkService.shared.acknowledgeAPIFailure()
+  }
+  
+  func acknowledgeLocationFailure() {
+    _locationString = nil
+    _locationGeo = nil
+    _locationFailure = false
   }
   
   func reset() {

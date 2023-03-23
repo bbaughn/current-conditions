@@ -11,8 +11,9 @@ import SwiftUI
 struct CurrentConditionsApp: App {
     
   // These could be in a view model
-  @State private var showLocationModal: Bool = true
+  @State private var showLocationModal: Bool = false
   @State private var showAPIFailureAlert: Bool = false
+  @State private var showLocationFailureAlert: Bool = false
 
   var body: some Scene {
     WindowGroup {
@@ -22,6 +23,15 @@ struct CurrentConditionsApp: App {
             Text("Could not get weather for this location")
             Button("Ok") {
               WeatherManager.shared.acknowledgeAPIFailure()
+            }
+          }
+        }
+        else if showLocationFailureAlert {
+          VStack {
+            Text("Could not get location. You may have to enable it in Settings > Privacy > Location")
+              .padding(20)
+            Button("Ok") {
+              WeatherManager.shared.acknowledgeLocationFailure()
             }
           }
         }
@@ -36,6 +46,9 @@ struct CurrentConditionsApp: App {
       }
       .onReceive(WeatherManager.shared.$apiFailure, perform: { apiFailure in
         showAPIFailureAlert = apiFailure
+      })
+      .onReceive(WeatherManager.shared.locationFailure, perform: { locationFailure in
+        showLocationFailureAlert = locationFailure
       })
     }
   }
