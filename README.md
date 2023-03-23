@@ -5,11 +5,8 @@ Here's my version of the weather app challenge, it should meet the requirements 
 The main thing I would do with more time is break things into separate files, as I noted a few places throughout the project. It would benefit from a separate:
 
 LocationManager
-
 PersistenceManager
-
 CurrentConditionsAppViewModel
-
 
 To demonstrate UIKit, the modal where you select a location is implemented that way. It's wrapped in a SwiftUI for use in this SwiftUI context.
 
@@ -22,4 +19,5 @@ Alerts could be handled better with better design.
 With more time I would probably use size classes to change font sizes for different orientations/devices but I did check to see that it lays out ok for those anyway.
 
 I look forward to any next steps in the interview process.
+
 Brian
