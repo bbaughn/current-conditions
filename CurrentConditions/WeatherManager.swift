@@ -77,6 +77,7 @@ class WeatherManager: NSObject, CLLocationManagerDelegate {
       if let location = locations.last {
           _locationGeo = location
           userDefaults.set([location.coordinate.latitude, location.coordinate.longitude], forKey: LOCATION_GEO)
+          userDefaults.removeObject(forKey: LOCATION_STRING)
           NetworkService.shared.getWeather(location)
           print("latitude \(location.coordinate.latitude)")
       }
