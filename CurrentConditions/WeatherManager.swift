@@ -58,10 +58,8 @@ class WeatherManager: NSObject, CLLocationManagerDelegate {
       .receive(on: RunLoop.main)
       .map { locationGeo, locationString -> Bool in
         if let locationGeo = self._locationGeo {
-          if let locationGeo = self._locationGeo {
-            NetworkService.shared.getWeather(locationGeo)
-            return true
-          }
+          NetworkService.shared.getWeather(locationGeo)
+          return true
         }
         else if let locationString = self._locationString {
           self.userDefaults.set(locationString, forKey: self.LOCATION_STRING)
@@ -111,6 +109,12 @@ class WeatherManager: NSObject, CLLocationManagerDelegate {
   
   func setLocationString(_ inputString : String) {
     _locationString = inputString
+  }
+  
+  func acknowledgeAPIFailure() {
+    _locationString = nil
+    _locationGeo = nil
+    NetworkService.shared.acknowledgeAPIFailure()
   }
   
   func reset() {

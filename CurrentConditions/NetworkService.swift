@@ -111,6 +111,10 @@ class NetworkService {
     task.resume()
   }
   
+  func acknowledgeAPIFailure() {
+    _apiFailure = false
+  }
+  
   func resetCurrentConditions() {
     _currentConditions = nil
   }
