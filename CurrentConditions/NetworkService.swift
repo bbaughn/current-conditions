@@ -51,7 +51,7 @@ class NetworkService {
   @Published var _apiFailure: Bool = false
   
   func buildStringURL(_ string : String) -> String {
-    let stringWithoutSpaces = string.replacingOccurrences(of: " ", with: "")
+    let stringWithoutSpaces = string.replacingOccurrences(of: " ", with: "%20")
     let url = URL_BASE + "q=" + stringWithoutSpaces + ",US&appId=" + URL_API_KEY
     print(url)
     return url
