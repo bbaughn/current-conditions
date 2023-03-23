@@ -15,12 +15,14 @@ struct CurrentConditionsApp: App {
   @State private var showAPIFailureAlert: Bool = false
 
   var body: some Scene {
-      WindowGroup {
+    WindowGroup {
+      ZStack {
         if showAPIFailureAlert {
-          Text("Could not get weather for this location")
-          Button("Ok") {
-            showAPIFailureAlert = false
-            WeatherManager.shared.acknowledgeAPIFailure()
+          VStack {
+            Text("Could not get weather for this location")
+            Button("Ok") {
+              WeatherManager.shared.acknowledgeAPIFailure()
+            }
           }
         }
         else {
@@ -29,11 +31,13 @@ struct CurrentConditionsApp: App {
             .onReceive(WeatherManager.shared.hasLocation) { hasLocation in
               showLocationModal = !hasLocation
             }
-            .onReceive(WeatherManager.shared.$apiFailure, perform: { apiFailure in
-              showAPIFailureAlert = apiFailure
-            })
+            
         }
       }
+      .onReceive(WeatherManager.shared.$apiFailure, perform: { apiFailure in
+        showAPIFailureAlert = apiFailure
+      })
+    }
   }
 
   func onDismiss() {}
