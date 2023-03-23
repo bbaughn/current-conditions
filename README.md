@@ -4,9 +4,13 @@ Here's my version of the weather app challenge, it should meet the requirements 
 
 The main thing I would do with more time is break things into separate files, as I noted a few places throughout the project. It would benefit from a separate:
 
-LocationManager
-PersistenceManager
-CurrentConditionsAppViewModel
+LocationManager.swift
+
+PersistenceManager.swift
+
+Models.swift
+
+CurrentConditionsAppViewModel.swift
 
 To demonstrate UIKit, the modal where you select a location is implemented that way. It's wrapped in a SwiftUI for use in this SwiftUI context.
 
@@ -17,6 +21,8 @@ I avoided using the Geocoder API because I didn't want to have to wait for two A
 Alerts could be handled better with better design.
 
 With more time I would probably use size classes to change font sizes for different orientations/devices but I did check to see that it lays out ok for those anyway.
+
+For additional functionality I added a Celsius/Fahrenheit toggle button.
 
 I look forward to any next steps in the interview process.
 
