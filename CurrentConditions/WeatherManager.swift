@@ -8,13 +8,17 @@
 import Foundation
 import CoreLocation
 import Combine
+import CoreLocation
 
-class WeatherManager {
+class WeatherManager: NSObject, CLLocationManagerDelegate {
   static let shared = WeatherManager()
   
   let userDefaults = UserDefaults.standard
   let LOCATION_GEO = "locationGeo"
   let LOCATION_STRING = "locationString"
+  
+  // Location could be its own service
+  let locationManager = CLLocationManager()
   
   @Published var apiFailure: Bool = false
   @Published var currentConditions: CurrentConditions? = nil
@@ -28,8 +32,18 @@ class WeatherManager {
   internal var locationGeo: Published<CLLocation?>.Publisher { $_locationGeo }
   @Published var _locationGeo: CLLocation? = nil
   
-  init() {
-    
+  internal var locationFailure: Published<Bool>.Publisher { $_locationFailure }
+  @Published var _locationFailure: Bool = false
+  
+  override init() {
+    super.init()
+    // Should be broken out into a PersistenceService
+    if let coordinates = userDefaults.object(forKey: LOCATION_GEO) as? [Double] {
+      _locationGeo = CLLocation(latitude: coordinates[0], longitude: coordinates[1])
+    }
+    else {
+      _locationGeo = nil
+    }
     _locationString = userDefaults.object(forKey: LOCATION_STRING) as? String
     
     NetworkService.shared.currentConditions
@@ -44,7 +58,10 @@ class WeatherManager {
       .receive(on: RunLoop.main)
       .map { locationGeo, locationString -> Bool in
         if let locationGeo = self._locationGeo {
-          return true
+          if let locationGeo = self._locationGeo {
+            NetworkService.shared.getWeather(locationGeo)
+            return true
+          }
         }
         else if let locationString = self._locationString {
           self.userDefaults.set(locationString, forKey: self.LOCATION_STRING)
@@ -55,8 +72,41 @@ class WeatherManager {
         return false
       }
       .assign(to: &$_hasLocation)
-    
-    
+  }
+  
+  func locationManager(_ manager: CLLocationManager,didUpdateLocations locations: [CLLocation]) {
+      print("Got up update on location")
+      if let location = locations.last {
+          _locationGeo = location
+          userDefaults.set([location.coordinate.latitude, location.coordinate.longitude], forKey: LOCATION_GEO)
+          NetworkService.shared.getWeather(location)
+          print("latitude \(location.coordinate.latitude)")
+      }
+  }
+  
+  func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    print("Location manager did change authorization to \(locationManager.authorizationStatus)")
+    if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
+      locationManager.requestLocation()
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print("Location manager failed \(error.localizedDescription)")
+    _locationFailure = true
+  }
+  
+  func setGeo() {
+    locationManager.delegate = self
+    if locationManager.authorizationStatus == .notDetermined {
+      print("Requesting always authorization")
+      locationManager.requestAlwaysAuthorization()
+    }
+    else {
+      print("Going to request location right away because we have permission")
+      _locationGeo = nil
+      locationManager.requestLocation()
+    }
   }
   
   func setLocationString(_ inputString : String) {

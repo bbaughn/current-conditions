@@ -8,6 +8,8 @@
 import SwiftUI
 import UIKit
 
+// Demonstration of UIKit here, wrapped for use in SwiftUI
+
 class LocationViewController: UIViewController {
   
   private static var locationInputDelegate = LocationInputDelegate()
@@ -32,6 +34,14 @@ class LocationViewController: UIViewController {
     return input
   }()
   
+  private var geoButton: UIButton = {
+    let button = UIButton(type: .roundedRect)
+    button.setTitle("Use Current Location", for: .normal)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.titleLabel?.font = UIFont.systemFont(ofSize: 22.0)
+    return button
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor(hue: 0.0, saturation: 0.0, brightness: 0.95, alpha: 1.0)
@@ -51,6 +61,20 @@ class LocationViewController: UIViewController {
       locationInputLabel.bottomAnchor.constraint(equalTo: locationInput.topAnchor),
       locationInputLabel.heightAnchor.constraint(equalToConstant: 50)
     ])
+    
+    geoButton.addTarget(self, action: #selector(geoButtonPressed), for: .touchUpInside)
+    view.addSubview(geoButton)
+    NSLayoutConstraint.activate([
+      geoButton.widthAnchor.constraint(equalToConstant: 280),
+      geoButton.heightAnchor.constraint(equalToConstant: 50),
+      geoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      geoButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+    ])
+  }
+  
+  @objc func geoButtonPressed() {
+    geoButton.isEnabled = false
+    WeatherManager.shared.setGeo()
   }
   
   private class LocationInputDelegate: NSObject, UITextFieldDelegate {

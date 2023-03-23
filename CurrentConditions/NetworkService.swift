@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation // Do away with this dependency when possible
 
 // Could be in a models file
 struct CurrentConditions: Codable {
@@ -62,6 +63,10 @@ class NetworkService {
       return
     }
     getWeather(url: url)
+  }
+  
+  func getWeather(_ geo: CLLocation) {
+    
   }
   
   private func getWeather(url: URL) {
