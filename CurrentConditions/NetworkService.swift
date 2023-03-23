@@ -57,6 +57,12 @@ class NetworkService {
     return url
   }
   
+  func buildGeoURL(_ geo : CLLocation) -> String {
+    let url = URL_BASE + "lat=" + String(geo.coordinate.latitude) + "&lon=" + String(geo.coordinate.longitude) + "&appId=" + URL_API_KEY
+    print(url)
+    return url
+  }
+  
   func getWeather(_ string: String) {
     guard let url = URL(string: buildStringURL(string)) else {
       print("Error building string URL")
@@ -66,7 +72,11 @@ class NetworkService {
   }
   
   func getWeather(_ geo: CLLocation) {
-    
+    guard let url = URL(string: buildGeoURL(geo)) else {
+      print("Error building geo URL")
+      return
+    }
+    getWeather(url: url)
   }
   
   private func getWeather(url: URL) {
