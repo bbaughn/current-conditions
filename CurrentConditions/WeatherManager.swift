@@ -73,24 +73,20 @@ class WeatherManager: NSObject, CLLocationManagerDelegate {
   }
   
   func locationManager(_ manager: CLLocationManager,didUpdateLocations locations: [CLLocation]) {
-      print("Got up update on location")
       if let location = locations.last {
           _locationGeo = location
           userDefaults.set([location.coordinate.latitude, location.coordinate.longitude], forKey: LOCATION_GEO)
           userDefaults.removeObject(forKey: LOCATION_STRING)
           NetworkService.shared.getWeather(location)
-          print("latitude \(location.coordinate.latitude)")
       }
   }
   
   func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
     print("Location manager did change authorization to \(locationManager.authorizationStatus)")
     if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
-      print("Going to request location")
       locationManager.requestLocation()
     }
     else {
-      print("Setting location failure to true")
       _locationFailure = true
     }
   }
@@ -103,11 +99,9 @@ class WeatherManager: NSObject, CLLocationManagerDelegate {
   func setGeo() {
     locationManager.delegate = self
     if locationManager.authorizationStatus == .notDetermined {
-      print("Requesting always authorization")
       locationManager.requestAlwaysAuthorization()
     }
     else {
-      print("Going to request location right away because we have permission")
       _locationGeo = nil
       locationManager.requestLocation()
     }

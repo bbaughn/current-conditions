@@ -97,7 +97,6 @@ class NetworkService {
         do {
           if response.statusCode == 200 {
             self._currentConditions = try JSONDecoder().decode(CurrentConditions.self, from: data)
-            print(self._currentConditions?.name)
           } else {
             print("Response wasn't 200. It was: " + "\n\(response.statusCode)")
             self._apiFailure = true
