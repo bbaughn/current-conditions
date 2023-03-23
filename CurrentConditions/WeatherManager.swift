@@ -12,6 +12,10 @@ import Combine
 class WeatherManager {
   static let shared = WeatherManager()
   
+  let userDefaults = UserDefaults.standard
+  let LOCATION_GEO = "locationGeo"
+  let LOCATION_STRING = "locationString"
+  
   @Published var apiFailure: Bool = false
   @Published var currentConditions: CurrentConditions? = nil
   
@@ -25,6 +29,9 @@ class WeatherManager {
   @Published var _locationGeo: CLLocation? = nil
   
   init() {
+    
+    _locationString = userDefaults.object(forKey: LOCATION_STRING) as? String
+    
     NetworkService.shared.currentConditions
       .receive(on:RunLoop.main)
       .assign(to: &$currentConditions)
@@ -40,12 +47,16 @@ class WeatherManager {
           return true
         }
         else if let locationString = self._locationString {
+          self.userDefaults.set(locationString, forKey: self.LOCATION_STRING)
+          self.userDefaults.removeObject(forKey: self.LOCATION_GEO)
           NetworkService.shared.getWeather(locationString)
           return true
         }
         return false
       }
       .assign(to: &$_hasLocation)
+    
+    
   }
   
   func setLocationString(_ inputString : String) {
@@ -55,6 +66,8 @@ class WeatherManager {
   func reset() {
     _locationGeo = nil
     _locationString = nil
+    userDefaults.removeObject(forKey: LOCATION_GEO)
+    userDefaults.removeObject(forKey: LOCATION_STRING)
     NetworkService.shared.resetCurrentConditions()
   }
 }
